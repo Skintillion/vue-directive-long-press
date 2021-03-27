@@ -16,7 +16,7 @@ export const directiveOption = {
 
     const onpointerup = () => {
       clearTimeout(parseInt(el.dataset.longPressTimeoutId))
-
+      
       if (vnode.componentInstance) {
         vnode.componentInstance.$emit('long-press-stop')
       } else {
@@ -28,6 +28,7 @@ export const directiveOption = {
 
     const onpointerdown = () => {
       document.addEventListener('pointerup', onpointerup)
+      document.addEventListener('scroll', onscroll)
 
       const timeout = setTimeout(() => {
         if (vnode.componentInstance) {
@@ -38,6 +39,13 @@ export const directiveOption = {
       }, binding.value)
 
       el.dataset.longPressTimeoutId = timeout.toString()
+    }
+
+    const onscroll = () => {
+      clearTimeout(parseInt(el.dataset.longPressTimeoutId))
+
+      document.removeEventListener('pointerup', onpointerup)
+      document.removeEventListener('scroll', onscroll)
     }
 
     el.$_long_press_pointerdown_handler = onpointerdown;
