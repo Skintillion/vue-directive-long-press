@@ -15,7 +15,7 @@ export const directiveOption = {
         };
         const onpointerdown = () => {
             document.addEventListener('pointerup', onpointerup);
-            window.addEventListener('scroll', onscroll);
+            window.addEventListener('touchmove', onscroll);
             window.addEventListener('wheel', onscroll);
             const timeout = setTimeout(() => {
                 if (vnode.componentInstance) {
@@ -30,7 +30,7 @@ export const directiveOption = {
         const onscroll = () => {
             clearTimeout(parseInt(el.dataset.longPressTimeoutId));
             document.removeEventListener('pointerup', onpointerup);
-            window.removeEventListener('scroll', onscroll);
+            window.removeEventListener('touchmove', onscroll);
             window.removeEventListener('wheel', onscroll);
         };
         el.$_long_press_pointerdown_handler = onpointerdown;
